@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MainActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <include layout="@layout/conteudo_principal" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/novaTarefaFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/fab_add" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

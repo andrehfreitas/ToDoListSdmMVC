@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ToDoListSdm</string>
+    <string name="nome_item_lista">Nome do item de lista</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="salvar">Salvar</string>
+    <string name="tarefa">Tarefa</string>
+    <string name="editar">Editar</string>
+    <string name="remover">Remover</string>
+    <string name="limpar_tudo">Limpar tudo</string>
+    <string name="excluir_todas_tarefas">Excluir TODAS as tarefas?</string>
+    <string name="tarefas_removidas">Tarefas removidas.</string>
+    <string name="excluir_tarefa">Excluir tarefa?</string>
+    <string name="tarefa_removida">Tarefa removida.</string>
+    <string name="insercao">Inserção</string>
+    <string name="edicao">Edição</string>
+</resources>

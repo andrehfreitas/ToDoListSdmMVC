@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.todolistsdm.view
 
 import android.app.Activity
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextMenu
@@ -9,8 +10,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import androidx.room.Room
 import br.edu.ifsp.scl.todolistsdm.R
 import br.edu.ifsp.scl.todolistsdm.adapter.ListaTarefasAdapter
+import br.edu.ifsp.scl.todolistsdm.model.database.ToDoListDatabase
 import br.edu.ifsp.scl.todolistsdm.model.entity.Tarefa
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.celula_lista_tarefas.view.*
@@ -30,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var listaTarefasAdapter: ListaTarefasAdapter
     private lateinit var listaTarefas: MutableList<Tarefa>
+    private lateinit var toDoListDatabase: ToDoListDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +59,7 @@ class MainActivity : AppCompatActivity() {
 
             view.checadoTarefaCb.isChecked = tarefaClicada.checado == 1
 
-            /*
-            Atualizar atributo checado na fonte de dados
-             */
+            /* Atualizar atributo checado na fonte de dados */
         }
 
         registerForContextMenu(conteudoLv)
@@ -69,13 +71,17 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(tarefaIntent, Constantes.TAREFA_ACTIVITY_REQUEST_CODE)
         }
 
-        /*
-        Buscar referência com fonte de dados
-         */
+        /* Buscar referência com fonte de dados*/
+        toDoListDatabase = Room.databaseBuilder(
+            this,
+            ToDoListDatabase::class.java,
+            ToDoListDatabase.Constantes.DB_NAME
+        ).build()
 
-        /*
-        Recuperar tarefas da fonte de dados e passar para o adaptador do ListView
-         */
+
+        /* Recuperar tarefas da fonte de dados e passar para o adaptador do ListView */
+        
+
     }
 
     override fun onCreateContextMenu(
@@ -146,7 +152,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == Constantes.TAREFA_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             /* Pegando tarefa retornada (se existe) pela TarefaActivity */
             val tarefaRetorno = data?.getParcelableExtra<Tarefa>(Constantes.TAREFA_EXTRA)
@@ -154,6 +162,7 @@ class MainActivity : AppCompatActivity() {
             if (tarefaRetorno != null) {
                 /* Verificando se tarefa já existe no adaptador do ListView */
                 val tarefaExistente = listaTarefasAdapter.getTarefaById(tarefaRetorno.id)
+
                 if (tarefaExistente != null) {
                     /* Atualiza tarefa existente */
                     val indiceTarefaExistente = listaTarefas.indexOf(tarefaExistente)

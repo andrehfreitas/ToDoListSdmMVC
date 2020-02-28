@@ -1,6 +1,5 @@
 package br.edu.ifsp.scl.todolistsdm.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import br.edu.ifsp.scl.todolistsdm.R
 import br.edu.ifsp.scl.todolistsdm.model.entity.Tarefa
+import br.edu.ifsp.scl.todolistsdm.view.MainActivity
 
-class ListaTarefasAdapter(contexto: Context, listaTarefas: MutableList<Tarefa>):
+class ListaTarefasAdapter(contexto: MainActivity, listaTarefas: MutableList<Tarefa>):
     ArrayAdapter<Tarefa>(contexto,
         R.layout.celula_lista_tarefas, listaTarefas) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -42,6 +42,16 @@ class ListaTarefasAdapter(contexto: Context, listaTarefas: MutableList<Tarefa>):
             }
         }
         return null
+    }
+
+    fun getAll(): MutableList<Tarefa>{
+        val lista = mutableListOf<Tarefa>()
+        for (indice in 0..count - 1){
+            getItem(indice)?.let {
+                lista.add(it)
+            }
+        }
+        return lista
     }
 
     data class CelulaListaTarefasViewHolder (
